@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     iconSvg,
     children,
   } = props;
-  const iconDom = icon ? <Icon name={icon} svg={iconSvg} /> : null;
+  const iconNode = icon ? <Icon name={icon} svg={iconSvg} /> : null;
   const classes = classnames(
     'wm-button',
     type,
@@ -52,7 +52,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       v-on="$listeners"
     >
       <div className="wm-button-inner">
-        {loading ? <ActivityIndicatorRolling className="wm-button-loading" /> : iconDom}
+        {loading ? <ActivityIndicatorRolling className="wm-button-loading" /> : iconNode}
         <div className="md-button-content">{children}</div>
       </div>
     </button>
