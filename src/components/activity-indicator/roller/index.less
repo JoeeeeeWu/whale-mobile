@@ -1,0 +1,26 @@
+@import '../../style/mixins/index.less';
+
+.md-activity-indicator-rolling {
+  .clearfix;
+
+  .rolling-container {
+    position: relative;
+    float: left;
+  }
+  .rolling {
+    float: left;
+    circle.stroke {
+      will-change: auto;
+    }
+  }
+  .content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
