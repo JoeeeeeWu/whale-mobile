@@ -4,7 +4,7 @@ import Icon from '../icon';
 import ActivityIndicatorRolling from '../activity-indicator/roller';
 import './index.less';
 
-interface ButtonProps {
+type ButtonProps = {
   type?: 'default' | 'primary' | 'warning' | 'disabled' | 'link';
   nativeType?: 'button' | 'submit' | 'reset';
   round?: boolean;
@@ -15,7 +15,8 @@ interface ButtonProps {
   loading?: boolean;
   icon?: string;
   iconSvg?: boolean;
-}
+  onClick?: React.MouseEventHandler<HTMLElement>;
+} & Omit<React.ButtonHTMLAttributes<any>, 'type' | 'onClick'>;
 
 const Button: React.FC<ButtonProps> = (props) => {
   const {
@@ -43,12 +44,22 @@ const Button: React.FC<ButtonProps> = (props) => {
       small: size === 'small',
     },
   );
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => {
+    const { onClick } = props;
+    if (loading) {
+      return;
+    }
+    if (onClick) {
+      (onClick as React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>)(e);
+    }
+  };
   return (
     <button
       // eslint-disable-next-line react/button-has-type
       type={nativeType}
       className={classes}
       disabled={inactive || type === 'disabled'}
+      onClick={handleClick}
       v-on="$listeners"
     >
       <div className="wm-button-inner">

@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -58,15 +59,15 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
-      {
-        enforce: 'pre',
-        test: /\.(ts|tsx|js|jsx)$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          cache: true,
-        },
-      },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.(ts|tsx|js|jsx)$/,
+      //   exclude: /node_modules/,
+      //   loader: 'eslint-loader',
+      //   options: {
+      //     cache: true,
+      //   },
+      // },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         use: [
@@ -92,6 +93,12 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env.REACT_APP_ENV': JSON.stringify(process.env.REACT_APP_ENV),
+    }),
+    new ESLintPlugin({
+      extensions: ['ts', 'tsx', 'js', 'jsx'],
+      emitError: true,
+      emitWarning: true,
+      quiet: true,
     }),
   ],
 };
