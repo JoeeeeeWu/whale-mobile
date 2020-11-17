@@ -149,7 +149,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   let defaultTransition = '';
 
   switch (position) {
-    case 'botton':
+    case 'bottom':
       defaultTransition = 'wm-slide-up';
       break;
     case 'top':
@@ -164,6 +164,11 @@ const Popup: React.FC<PopupProps> = (props) => {
     default:
       defaultTransition = 'wm-fade';
   }
+
+  // eslint-disable-next-line no-console
+  console.log(position);
+  // eslint-disable-next-line no-console
+  console.log(defaultTransition);
 
   return (
     <div
@@ -204,7 +209,7 @@ Popup.defaultProps = {
   hasMask: true,
   maskClosable: true,
   position: 'center',
-  transition: 'wm-fade',
+  transition: '',
   preventScroll: false,
   largeRadius: false,
   preventScrollExclude: () => '',
