@@ -9,8 +9,6 @@ const PopupPage: React.FC = () => {
     <div>
       <Button
         onClick={() => {
-          // eslint-disable-next-line no-console
-          console.log('hehe');
           setCenterPopupShow(true);
         }}
       >

@@ -117,7 +117,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     } else if (show) {
       show();
     }
-    setAnimation(false);
+    // setAnimation(false);
   };
 
   // React.useEffect(() => {
@@ -142,9 +142,28 @@ const Popup: React.FC<PopupProps> = (props) => {
     }
   }, [visible]);
 
-  // if (!isPopupShow) {
-  //   return null;
-  // }
+  if (!isPopupShow) {
+    return null;
+  }
+
+  let defaultTransition = '';
+
+  switch (position) {
+    case 'botton':
+      defaultTransition = 'wm-slide-up';
+      break;
+    case 'top':
+      defaultTransition = 'wm-slide-down';
+      break;
+    case 'left':
+      defaultTransition = 'wm-slide-right';
+      break;
+    case 'right':
+      defaultTransition = 'wm-slide-left';
+      break;
+    default:
+      defaultTransition = 'wm-fade';
+  }
 
   return (
     <div
@@ -164,15 +183,17 @@ const Popup: React.FC<PopupProps> = (props) => {
         <div className="wm-popup-mask" onClick={$_onPopupMaskClick} />
       </CSSTransition>
       <Transition
-        name={transition}
+        name={transition || defaultTransition}
         visible={isPopupBoxShow}
         onEnter={$_onPopupTransitionStart}
         onExit={$_onPopupTransitionStart}
         onEntered={$_onPopupTransitionEnd}
         onExited={$_onPopupTransitionEnd}
-        timeout={100}
+        timeout={300}
       >
-        <div className={classnames('wm-popup-box', transition)}>{children}</div>
+        <div className={classnames('wm-popup-box', transition || defaultTransition)}>
+          {children}
+        </div>
       </Transition>
     </div>
   );
