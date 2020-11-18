@@ -18,15 +18,15 @@
     }
   }
   & when (@direction = left) {
-    transform: scaleY(0.5) translateY(-100%);
+    transform: scaleX(0.5) translateX(-100%);
     @media (min-resolution: 3dppx) {
-      transform: scaleY(0.33) translateY(-100%);
+      transform: scaleX(0.33) translateX(-100%);
     }
   }
   & when (@direction = right) {
-    transform: scaleY(0.5) translateY(100%);
+    transform: scaleX(0.5) translateX(100%);
     @media (min-resolution: 3dppx) {
-      transform: scaleY(0.33) translateY(100%);
+      transform: scaleX(0.33) translateX(100%);
     }
   }
 }
@@ -109,6 +109,38 @@
       //   border-radius radius * 2
       // else
       //   border-radius "calc(%s * 2)" % radius
+    }
+  }
+}
+
+.remove-hairline(@direction: all) {
+  & when (@direction = top) {
+    &::after {
+      display: none;
+    }
+  }
+
+  & when (@direction = bottom) {
+    &::before {
+      display: none;
+    }
+  }
+
+  & when (@direction = left) {
+    &::after {
+      display: none;
+    }
+  }
+
+  & when (@direction = right) {
+    &::before {
+      display: none;
+    }
+  }
+
+  & when (@direction = all) {
+    &::after {
+      display: none;
     }
   }
 }

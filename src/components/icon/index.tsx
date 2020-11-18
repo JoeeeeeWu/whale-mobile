@@ -10,27 +10,17 @@ interface IconProps {
   color?: string;
   svg?: boolean;
   onClick?: () => void;
+  className?: string;
 }
 
 const Icon: React.FC<IconProps> = (props) => {
-  const {
-    svg,
-    name,
-    size,
-    color,
-    onClick,
-  } = props;
+  const { svg, name, size, color, onClick, className } = props;
   const isInnerSvg = !!defaultSvg[name as string];
   React.useEffect(() => loadSprite(), []);
   if (svg || isInnerSvg) {
     return (
       <svg
-        className={classnames(
-          'wm-icon',
-          'icon-svg',
-          `wm-icon-${name}`,
-          size,
-        )}
+        className={classnames('wm-icon', 'icon-svg', `wm-icon-${name}`, size, className)}
         style={{ fill: color }}
         onClick={onClick}
       >
@@ -41,13 +31,7 @@ const Icon: React.FC<IconProps> = (props) => {
   if (name) {
     return (
       <i
-        className={classnames(
-          'wm-icon',
-          'icon-font',
-          `wm-icon-${name}`,
-          name,
-          size,
-        )}
+        className={classnames('wm-icon', 'icon-font', `wm-icon-${name}`, name, size)}
         style={{ color }}
         onClick={onClick}
       />

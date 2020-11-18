@@ -127,8 +127,6 @@ const Popup: React.FC<PopupProps> = (props) => {
   // }, []);
 
   React.useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(visible);
     if (visible) {
       if (isAnimation) {
         setTimeout(() => {
@@ -141,10 +139,6 @@ const Popup: React.FC<PopupProps> = (props) => {
       $_hidePopupBox();
     }
   }, [visible]);
-
-  if (!isPopupShow) {
-    return null;
-  }
 
   let defaultTransition = '';
 
@@ -165,10 +159,9 @@ const Popup: React.FC<PopupProps> = (props) => {
       defaultTransition = 'wm-fade';
   }
 
-  // eslint-disable-next-line no-console
-  console.log(position);
-  // eslint-disable-next-line no-console
-  console.log(defaultTransition);
+  if (!isPopupShow) {
+    return null;
+  }
 
   return (
     <div
@@ -177,7 +170,6 @@ const Popup: React.FC<PopupProps> = (props) => {
         'large-radius': largeRadius,
       })}
       ref={popupRef}
-      style={{ display: isPopupShow ? 'flex' : 'none' }}
     >
       <CSSTransition
         in={hasMask && isPopupBoxShow}
