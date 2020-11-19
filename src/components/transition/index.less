@@ -1,10 +1,23 @@
 .wm-bounce {
-  &-enter-active {
+  // &-enter {
+  //   transform: translate3d(0, 100%, 0);
+  // }
+  &-enter-active,
+  &-appear-active {
     animation: bounce-in 300ms linear;
   }
-  &-leave-active {
+  // &-exit {
+  //   transform: translate3d(0, 0, 0);
+  // }
+  &-exit-active {
     animation: zoom-out 250ms linear;
   }
+  // &-enter-active {
+  //   animation: bounce-in 300ms linear;
+  // }
+  // &-leave-active {
+  //   animation: zoom-out 250ms linear;
+  // }
 }
 
 .wm-zoom {

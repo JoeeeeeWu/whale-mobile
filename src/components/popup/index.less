@@ -72,10 +72,12 @@
 }
 
 .wm-mask-fade {
-  &-enter {
+  &-enter,
+  &-appear {
     opacity: 0.01;
   }
-  &-enter-active {
+  &-enter-active,
+  &-appear-active {
     opacity: 1;
     transition: opacity 250ms;
   }

@@ -84,9 +84,9 @@ const Popup: React.FC<PopupProps> = (props) => {
     if (preventScroll) {
       $_preventScroll(false);
     }
-    if (onHide) {
-      onHide();
-    }
+    // if (onHide) {
+    //   onHide();
+    // }
   };
   const $_onPopupMaskClick = () => {
     if (maskClosable) {
@@ -111,6 +111,9 @@ const Popup: React.FC<PopupProps> = (props) => {
     if (!isPopupBoxShow) {
       // popup hide after popup box finish animation
       setPopupShow(false);
+      if (onHide) {
+        onHide();
+      }
       if (hide) {
         hide();
       }
@@ -176,6 +179,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         timeout={250}
         classNames="wm-mask-fade"
         unmountOnExit
+        appear
       >
         <div className="wm-popup-mask" onClick={$_onPopupMaskClick} />
       </CSSTransition>
@@ -186,7 +190,8 @@ const Popup: React.FC<PopupProps> = (props) => {
         onExit={$_onPopupTransitionStart}
         onEntered={$_onPopupTransitionEnd}
         onExited={$_onPopupTransitionEnd}
-        timeout={300}
+        timeout={250}
+        appear
       >
         <div className={classnames('wm-popup-box', transition || defaultTransition)}>
           {children}

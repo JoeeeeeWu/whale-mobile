@@ -20,6 +20,7 @@ Dialog.confirm = ({
   onCancel = noop,
   onShow = noop,
   onHide = noop,
+  transition = 'wm-bounce',
 }: any) => {
   const div = document.createElement('div');
   document.body.appendChild(div);
@@ -38,6 +39,7 @@ Dialog.confirm = ({
     onCancel,
     onShow,
     onHide,
+    transition,
     btns: [
       {
         text: cancelText,
