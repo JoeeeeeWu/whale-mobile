@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import Transition from '../transition';
 import './index.less';
 
-interface PopupProps {
+export interface PopupProps {
   visible?: boolean;
   hasMask?: boolean;
   maskClosable?: boolean;
@@ -14,10 +14,12 @@ interface PopupProps {
   preventScrollExclude?: string | Function;
   largeRadius?: boolean;
   beforeHide?: Function;
-  beforeShow?: Function;
+  onBeforeShow?: Function;
   hide?: Function;
-  show?: Function;
+  onShow?: Function;
   onHide?: Function;
+  className?: string;
+  onMaskClick?: Function;
 }
 
 const Popup: React.FC<PopupProps> = (props) => {
@@ -37,12 +39,14 @@ const Popup: React.FC<PopupProps> = (props) => {
     largeRadius,
     transition,
     beforeHide,
-    beforeShow,
+    onBeforeShow,
     hide,
-    show,
+    onShow,
     onHide,
     maskClosable,
     children,
+    className,
+    onMaskClick = () => {},
   } = props;
   const $_preventDefault = (event: any) => {
     event.preventDefault();
@@ -92,6 +96,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     if (maskClosable) {
       $_hidePopupBox();
       // this.$emit('maskClick')
+      onMaskClick();
     }
   };
   const $_onPopupTransitionStart = () => {
@@ -99,8 +104,8 @@ const Popup: React.FC<PopupProps> = (props) => {
       if (beforeHide) {
         beforeHide();
       }
-    } else if (beforeShow) {
-      beforeShow();
+    } else if (onBeforeShow) {
+      onBeforeShow();
     }
   };
 
@@ -117,8 +122,8 @@ const Popup: React.FC<PopupProps> = (props) => {
       if (hide) {
         hide();
       }
-    } else if (show) {
-      show();
+    } else if (onShow) {
+      onShow();
     }
     // setAnimation(false);
   };
@@ -168,7 +173,7 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   return (
     <div
-      className={classnames('wm-popup', position, {
+      className={classnames('wm-popup', className, position, {
         'with-mask': hasMask,
         'large-radius': largeRadius,
       })}

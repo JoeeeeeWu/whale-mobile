@@ -1,0 +1,92 @@
+@import '../../style/themes/default.less';
+@import '../../style/mixins/index.less';
+
+.wm-picker-column {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 @picker-padding-h;
+  background: @color-bg-inverse;
+  transform: translate3d(0, 0, 0);
+}
+
+.wm-picker-column-container {
+  height: 100%;
+}
+
+.wm-picker-column-masker {
+  position: absolute !important;
+  right: @picker-padding-h;
+  left: @picker-padding-h;
+  z-index: 2;
+  transform: translate3d(0, 0, 0);
+  &.top {
+    top: 0;
+    // background -webkit-gradient(linear,left bottom,left top,from(hsla(0, 0%,100%,.2)),to(hsla(0,0%,100%,1)))
+    .hairline(bottom, @picker-border-color, 0, 3px);
+    // border-bottom solid 1px picker-border-color
+  }
+  &.bottom {
+    bottom: 0;
+    // bottom constant(safe-area-inset-bottom)
+    // background -webkit-gradient(linear,left top,left bottom,from(hsla(0, 0%,100%,.2)),to(hsla(0,0%,100%,1)))
+    .hairline(top, @picker-border-color, 0, 3px);
+    // border-top solid 1px picker-border-color
+  }
+}
+
+.wm-picker-column-hooks {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  .absolute-pos();
+
+  padding: 0 @picker-padding-h;
+}
+
+.wm-picker-column-hook {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+.wm-picker-column-list {
+  display: flex;
+  height: 100%;
+  // padding 0 picker-padding-h
+}
+
+.wm-picker-column-item {
+  position: relative;
+  display: flex;
+  flex: 1;
+  .clearfix();
+
+  overflow: hidden;
+  .column-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+    transform-origin: left top;
+    .column-item {
+      float: left;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 @h-gap-md;
+      color: @picker-color;
+      font-size: @picker-font-size;
+      text-align: center;
+      .word-ellipsis();
+      &.active {
+        color: @picker-color-active;
+        font-weight: @picker-font-weight-active;
+      }
+      &.disabled {
+        opacity: @picker-disabled-opacity;
+      }
+    }
+  }
+}

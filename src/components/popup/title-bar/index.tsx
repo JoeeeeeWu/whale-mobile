@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import Icon from '../../icon';
 import './index.less';
 
-interface PopupTitleBarProps {
+export interface PopupTitleBarProps {
   title?: string;
   describe?: string;
   okText?: string;

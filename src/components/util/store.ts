@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { noop } from './lang';
 
 /**
  * Mix properties into target object.
