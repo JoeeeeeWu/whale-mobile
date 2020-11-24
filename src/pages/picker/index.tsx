@@ -1658,7 +1658,7 @@ const PickerPage: React.FC = () => {
         data={districtPickerData}
         cols={3}
         defaultIndex={[3, 2, 1]}
-        defaultValue={['110000', '110100', '110101']}
+        // defaultValue={['110000', '110100', '110101']}
         isView
         isCascade
         onInitialed={onDistrictPickerInitialed}

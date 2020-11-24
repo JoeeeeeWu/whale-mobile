@@ -72,7 +72,6 @@ const Picker: React.FC<PickerProps> = (props) => {
     $_initPickerColumn();
   };
   const $_onPickerChange = (columnIndex, itemIndex, values) => {
-    // console.log(values);
     if (isCascade) {
       cascadePicker(
         columnRef,

@@ -131,7 +131,7 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
     isMouse && setMouseDown(false);
   };
 
-  const $_getColumnIndexByOffset = (top) => {
+  const $_getColumnIndexByOffset = (top: number) => {
     return Math.round(top / style.indicatorHeight);
   };
 
@@ -153,7 +153,6 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
   };
 
   const $_onColumnScrollEnd = (index: number) => {
-    console.log(scrollers);
     const scroller = scrollers[index];
     const top = scroller.getValues().top;
     const scrollTop = $_scrollInZoon(scroller, top);
@@ -161,6 +160,7 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
     const isInvalid = $_isColumnIndexInvalid(index, activeItemIndex);
 
     if (isInvalid || activeItemIndex === activedIndexs[index]) {
+      console.log('符合条件', activedIndexs);
       isInvalid && $_scrollToValidIndex(scroller, index, activeItemIndex);
       activeItemIndex === activedIndexs[index] && $_scrollToIndex(scroller, index, activeItemIndex);
       return false;
@@ -173,7 +173,9 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
 
     /* istanbul ignore next */
     // this.$emit('change', index, activeItemIndex, this.getColumnValue(index))
-    onChange(index, activeItemIndex, getColumnValue(index));
+    setTimeout(() => {
+      onChange(index, activeItemIndex, getColumnValue(index));
+    });
   };
 
   const $_resetScrollingPosition = (columnIndex: number) => {
