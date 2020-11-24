@@ -27,6 +27,7 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
     activedIndexs,
     $_initColumnsScroller,
     refresh,
+    setColumnValues: changeColumnValues,
   }));
   const [columnValues, setColumnValues] = React.useState<any[]>([]);
   const [isMouseDown, setMouseDown] = React.useState<boolean>(false);
@@ -36,7 +37,7 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
   const [isInitialed, setInitialed] = React.useState<boolean>(false);
   const [isScrollInitialed, setScrollInitialed] = React.useState<boolean>(false);
   const [isScrolling, setScrolling] = React.useState<boolean>(false);
-  const [scrollers, setScrollers] = React.useState<any>([]);
+  const [scrollers, setScrollers] = React.useState<any[]>([]);
   const {
     data,
     cols,
@@ -52,6 +53,29 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
     maskerHeight: (lineHeight * 2 + 10) * dpr,
     indicatorHeight: lineHeight * dpr,
   };
+
+  const changeColumnValues = (index, values, callback = noop) => {
+    /* istanbul ignore if */
+    if (index === undefined || values === undefined) {
+      return;
+    }
+
+    // reset active index
+    if (!keepIndex) {
+      activedIndexs[index] = 0;
+      setActivedIndexs([...activedIndexs]);
+    }
+
+    // this.$set(this.columnValues, index, values)
+    columnValues[index] = values;
+    setColumnValues([...columnValues]);
+    callback();
+    // this.$nextTick(() => {
+    //   // this.$_initSingleColumnScroller(index)
+    //   callback(this)
+    // })
+  };
+
   const $_isColumnIndexActive = (columnIndex: number, itemIndex: number) => {
     const activeIndex = activedIndexs[columnIndex];
     return activeIndex === itemIndex;
@@ -129,6 +153,7 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
   };
 
   const $_onColumnScrollEnd = (index: number) => {
+    console.log(scrollers);
     const scroller = scrollers[index];
     const top = scroller.getValues().top;
     const scrollTop = $_scrollInZoon(scroller, top);
@@ -143,11 +168,9 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
 
     /* istanbul ignore next */
     // this.$set(this.activedIndexs, index, activeItemIndex)
-    setActivedIndexs((prevState) => {
-      prevState[index] = activeItemIndex;
-      console.log(prevState);
-      return [...prevState];
-    });
+    activedIndexs[index] = activeItemIndex;
+    setActivedIndexs([...activedIndexs]);
+
     /* istanbul ignore next */
     // this.$emit('change', index, activeItemIndex, this.getColumnValue(index))
     onChange(index, activeItemIndex, getColumnValue(index));
@@ -167,10 +190,8 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
     }
 
     $_scrollToIndex(scroller, columnIndex, oldColumnActiveIndex);
-    setActivedIndexs((prevState) => {
-      prevState[columnIndex] = oldColumnActiveIndex;
-      return [...prevState];
-    });
+    activedIndexs[columnIndex] = oldColumnActiveIndex;
+    setActivedIndexs([...activedIndexs]);
     // this.$set(this.activedIndexs, columnIndex, oldColumnActiveIndex)
   };
 
@@ -211,10 +232,8 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
 
     // save scroller instance
     // this.$set(this.scrollers, index, scroller)
-    setScrollers((prevState) => {
-      prevState[index] = scroller;
-      return [...prevState];
-    });
+    scrollers[index] = scroller;
+    setScrollers([...scrollers]);
 
     // reset scrolling position
     $_resetScrollingPosition(index);
@@ -342,10 +361,8 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
         $_scrollToValidIndex(scroller, columnIndex, itemIndex);
       } else {
         $_scrollToIndex(scroller, columnIndex, itemIndex);
-        setActivedIndexs((prevState) => {
-          prevState[columnIndex] = itemIndex;
-          return [...prevState];
-        });
+        activedIndexs[columnIndex] = itemIndex;
+        setActivedIndexs([...activedIndexs]);
         // this.$set(this.activedIndexs, columnIndex, itemIndex)
       }
     });
@@ -386,7 +403,7 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
 
   React.useEffect(() => {
     setColumnValues(extend([], data));
-  }, []);
+  }, [data]);
   return (
     <div
       ref={columnRef}

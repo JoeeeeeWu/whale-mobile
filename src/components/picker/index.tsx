@@ -7,6 +7,7 @@ import PopupTitleBar, { PopupTitleBarProps } from '../popup/title-bar';
 import PickerColumn from './picker-column';
 // import forwardRef from '../forward-ref';
 import { noop, getDpr, traverse, inArray, extend, warn } from '../util';
+import cascadePicker from './cascade';
 import './index.less';
 
 // const ForwardRefPickerColumn = forwardRef(PickerColumn);
@@ -21,6 +22,8 @@ interface PickerProps extends PopupProps, PopupTitleBarProps {
   keepIndex?: boolean;
   lineHeight?: number;
   onInitialed?: Function;
+  isCascade?: boolean;
+  onChange?: Function;
 }
 
 const Picker: React.FC<PickerProps> = (props) => {
@@ -45,12 +48,60 @@ const Picker: React.FC<PickerProps> = (props) => {
     cancelText,
     largeRadius,
     visible,
+    isCascade = false,
+    onChange = () => {},
+    onCancel = () => {},
   } = props;
-  const $_onPickerChange = () => {};
+  const $_initPickerColumn = () => {
+    if (!isCascade) {
+      return;
+    }
+
+    const defaultIndex = $_getDefaultIndex();
+    const defaultValue = $_getDefaultValue();
+    // const defaultIndexOfFirstColumn = defaultIndex[0] || 0
+    cascadePicker(columnRef, {
+      currentLevel: -1,
+      maxLevel: cols,
+      values: data || [],
+      defaultIndex,
+      defaultValue,
+    });
+  };
+  const $_resetPickerColumn = () => {
+    $_initPickerColumn();
+  };
+  const $_onPickerChange = (columnIndex, itemIndex, values) => {
+    // console.log(values);
+    if (isCascade) {
+      cascadePicker(
+        columnRef,
+        {
+          currentLevel: columnIndex,
+          maxLevel: cols,
+          values,
+        },
+        () => {
+          // reinitiate columns after the changing column
+          columnRef.current.refresh(null, columnIndex + 1);
+        },
+      );
+    }
+    /* istanbul ignore next */
+    onChange(columnIndex, itemIndex, values);
+    // this.$emit('change', columnIndex, itemIndex, values)
+  };
   const $_onPickerBeforeShow = () => {};
   const $_onPickerShow = () => {};
   const $_onPickerHide = () => {};
-  const $_onPickerCancel = () => {};
+  const $_onPickerCancel = () => {
+    setPickerShow(false);
+    onCancel();
+
+    // reset picker by snapshot
+    $_resetPickerColumn();
+    columnRef.current.refresh();
+  };
   const $_onPickerConfirm = () => {};
   const $_getDefaultValue = () => {
     return oldActivedIndexs ? [] : defaultValue;
@@ -84,6 +135,10 @@ const Picker: React.FC<PickerProps> = (props) => {
     }
   }, []);
 
+  React.useEffect(() => {
+    $_initPickerColumn();
+  }, [data, defaultIndex]);
+
   return (
     <div
       className={classnames('wm-picker', {
@@ -108,7 +163,7 @@ const Picker: React.FC<PickerProps> = (props) => {
         <Popup
           // ref="popup"
           className="inner-popup"
-          v-model="isPickerShow"
+          // v-model="isPickerShow"
           position="bottom"
           maskClosable={maskClosable}
           onBeforeShow={$_onPickerBeforeShow}
@@ -128,6 +183,7 @@ const Picker: React.FC<PickerProps> = (props) => {
           />
           <PickerColumn
             // ref="pickerColumn"
+            ref={columnRef}
             data={data}
             defaultValue={$_getDefaultValue()}
             defaultIndex={$_getDefaultIndex()}
