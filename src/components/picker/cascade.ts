@@ -51,7 +51,7 @@ export default function (picker, options = {}, fn) {
   /* istanbul ignore next */
   for (let i = options.currentLevel + 1; i < options.maxLevel; i++) {
     const columnValues = (!i ? values[i] : values.children) || [];
-    picker.current.setColumnValues(i, columnValues);
+    picker?.current?.setColumnValues?.(i, columnValues);
     let activeIndex = getDefaultIndex(
       columnValues,
       options.defaultIndex[i],

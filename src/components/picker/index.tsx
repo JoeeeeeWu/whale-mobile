@@ -44,10 +44,10 @@ const Picker: React.FC<PickerProps> = (props) => {
     lineHeight,
     onInitialed,
     describe,
-    okText,
-    cancelText,
+    okText = '确定',
+    cancelText = '取消',
     largeRadius,
-    visible,
+    visible = false,
     isCascade = false,
     onChange = () => {},
     onCancel = () => {},
@@ -130,13 +130,20 @@ const Picker: React.FC<PickerProps> = (props) => {
   React.useEffect(() => {
     $_initPicker();
     if (isView) {
-      columnRef.current.refresh();
+      columnRef?.current?.refresh?.();
     }
   }, []);
 
   React.useEffect(() => {
     $_initPickerColumn();
   }, [data, defaultIndex]);
+
+  React.useEffect(() => {
+    setPickerShow(visible);
+    if (visible) {
+      $_initPicker();
+    }
+  }, [visible]);
 
   return (
     <div
@@ -163,13 +170,15 @@ const Picker: React.FC<PickerProps> = (props) => {
           // ref="popup"
           className="inner-popup"
           // v-model="isPickerShow"
+          visible={isPickerShow}
           position="bottom"
           maskClosable={maskClosable}
           onBeforeShow={$_onPickerBeforeShow}
           onShow={$_onPickerShow}
           onHide={$_onPickerHide}
           onMaskClick={$_onPickerCancel}
-          prevent-scroll
+          largeRadius={largeRadius}
+          preventScroll
         >
           <PopupTitleBar
             title={title}

@@ -1,5 +1,6 @@
 import React from 'react';
 import Picker from '../../components/picker';
+import Button from '../../components/button';
 
 const pickerData = [
   [
@@ -1641,6 +1642,7 @@ const districtPickerData = [
 ];
 
 const PickerPage: React.FC = () => {
+  const [isPickerShow, setPickerShow] = React.useState<boolean>(false);
   const onDistrictPickerConfirm = () => {};
   const onDistrictPickerInitialed = () => {};
   return (
@@ -1663,6 +1665,18 @@ const PickerPage: React.FC = () => {
         isCascade
         onInitialed={onDistrictPickerInitialed}
         onChange={onDistrictPickerConfirm}
+      />
+      <Button onClick={() => setPickerShow(true)}>选择</Button>
+      <Picker
+        // ref="picker1"
+        // v-model="isPickerShow1"
+        visible={isPickerShow}
+        data={districtPickerData}
+        cols={3}
+        isCascade
+        largeRadius
+        title="选择省市区/县"
+        // @confirm="onPickerConfirm(1)"
       />
     </>
   );
