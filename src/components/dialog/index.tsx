@@ -69,8 +69,6 @@ Dialog.confirm = ({
 
   const render = ({ ...props }: any) => {
     setTimeout(() => {
-      // eslint-disable-next-line no-console
-      console.log(props);
       ReactDOM.render(<Dialog {...props} />, div);
     });
   };

@@ -46,8 +46,6 @@ export default function (picker, options = {}, fn) {
 
   let values = options.values;
 
-  // console.log(values);
-
   /* istanbul ignore next */
   for (let i = options.currentLevel + 1; i < options.maxLevel; i++) {
     const columnValues = (!i ? values[i] : values.children) || [];

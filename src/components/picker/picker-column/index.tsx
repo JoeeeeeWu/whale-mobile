@@ -160,7 +160,6 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
     const isInvalid = $_isColumnIndexInvalid(index, activeItemIndex);
 
     if (isInvalid || activeItemIndex === activedIndexs[index]) {
-      console.log('符合条件', activedIndexs);
       isInvalid && $_scrollToValidIndex(scroller, index, activeItemIndex);
       activeItemIndex === activedIndexs[index] && $_scrollToIndex(scroller, index, activeItemIndex);
       return false;
@@ -400,7 +399,7 @@ const PickerColumn: React.FC<PickerColumnProps> = React.forwardRef((props, ref) 
       if (callback) {
         callback();
       }
-    }, 1000);
+    });
   };
 
   React.useEffect(() => {

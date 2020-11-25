@@ -27,8 +27,6 @@ const Popup: React.FC<PopupProps> = (props) => {
   const [isPopupShow, setPopupShow] = React.useState<boolean>(false);
   const [isPopupBoxShow, setPopupBoxShow] = React.useState<boolean>(false);
   const [isAnimation, setAnimation] = React.useState<boolean>(false);
-  const popupMaskRef = React.useRef(null);
-  const popupBoxRef = React.useRef(null);
   const popupRef = React.useRef(null);
   const {
     visible,
@@ -58,18 +56,25 @@ const Popup: React.FC<PopupProps> = (props) => {
     const handler = isBind ? 'addEventListener' : 'removeEventListener';
     // eslint-disable-next-line no-param-reassign
     exclude = exclude || preventScrollExclude;
-    const excluder = exclude && typeof exclude === 'string' ? 'ddd' : exclude;
+    const excluder =
+      exclude && typeof exclude === 'string'
+        ? popupRef?.current?.querySelector(preventScrollExclude)
+        : exclude;
     if (excluder) {
+      // eslint-disable-next-line no-debugger
+      // debugger
       excluder[handler]('touchmove', $_stopImmediatePropagation, false);
     }
   };
   const $_preventScroll = (isBind: boolean) => {
     const handler = isBind ? 'addEventListener' : 'removeEventListener';
-    if (popupMaskRef) {
-      popupMaskRef[handler]('touchmove', $_preventDefault, false);
+    const masker = popupRef?.current?.querySelector('.wm-popup-mask');
+    const boxer = popupRef?.current?.querySelector('.wm-popup-box');
+    if (masker) {
+      masker[handler]('touchmove', $_preventDefault, false);
     }
-    if (popupBoxRef) {
-      popupBoxRef[handler]('touchmove', $_preventDefault, false);
+    if (boxer) {
+      boxer[handler]('touchmove', $_preventDefault, false);
     }
     $_preventScrollExclude(isBind);
   };
@@ -127,12 +132,6 @@ const Popup: React.FC<PopupProps> = (props) => {
     }
     // setAnimation(false);
   };
-
-  // React.useEffect(() => {
-  //   if (visible) {
-  //     $_showPopupBox();
-  //   }
-  // }, []);
 
   React.useEffect(() => {
     if (visible) {
@@ -214,7 +213,7 @@ Popup.defaultProps = {
   transition: '',
   preventScroll: false,
   largeRadius: false,
-  preventScrollExclude: () => '',
+  preventScrollExclude: '',
 };
 
 export default Popup;

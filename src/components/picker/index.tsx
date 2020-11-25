@@ -139,9 +139,12 @@ const Picker: React.FC<PickerProps> = (props) => {
   }, [data, defaultIndex]);
 
   React.useEffect(() => {
-    setPickerShow(visible);
+    // setPickerShow(visible);
     if (visible) {
       $_initPicker();
+      setTimeout(() => {
+        columnRef?.current?.refresh?.();
+      }, 100);
     }
   }, [visible]);
 
