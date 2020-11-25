@@ -6,6 +6,7 @@ import DropMenuPage from './pages/drop-menu';
 import PopupPage from './pages/popup';
 import DialogPage from './pages/dialog';
 import PickerPage from './pages/picker';
+import ScrollViewPage from './pages/scroll-view';
 
 const App: React.FC<{}> = () => (
   <Router history={history}>
@@ -15,6 +16,7 @@ const App: React.FC<{}> = () => (
       <Route path="/popup" component={PopupPage} />
       <Route path="/dialog" component={DialogPage} />
       <Route path="/picker" component={PickerPage} />
+      <Route path="/scroll-view" component={ScrollViewPage} />
     </Switch>
   </Router>
 );
