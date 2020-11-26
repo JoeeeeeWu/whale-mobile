@@ -1,0 +1,48 @@
+@import '../style/themes/default.less';
+@import '../style/mixins/index.less';
+
+.wm-scroll-view {
+  position: relative;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  .scroll-view-header,
+  .scroll-view-footer {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 2;
+  }
+  .scroll-view-header {
+    top: 0;
+  }
+  .scroll-view-footer {
+    bottom: 0;
+  }
+  .scroll-view-container {
+    .clearfix();
+
+    position: relative;
+    z-index: 1;
+    // display inline-block
+    .scroll-view-refresh {
+      .clearfix();
+
+      position: absolute;
+      right: 0;
+      left: 0;
+      transform: translate3d(0, -100%, 0);
+    }
+    .scroll-view-more {
+      visibility: hidden;
+
+      &.active {
+        visibility: visible;
+      }
+    }
+    &.horizon {
+      display: inline-block;
+    }
+  }
+}
