@@ -3,17 +3,17 @@ import classnames from 'classnames';
 import './index.less';
 
 interface ActivityIndicatorRollingProps {
-  className?: string,
-  size?: number,
-  width?: number,
-  color?: string,
-  borderColor?: string,
-  fill?: string,
-  linecap?: 'butt' | 'round' | 'square' | 'inherit',
-  rotate?: number,
-  process?: number, // process control 0-1
-  circle?: any,
-  defs?: any,
+  className?: string;
+  size?: number;
+  width?: number;
+  color?: string;
+  borderColor?: string;
+  fill?: string;
+  linecap?: 'butt' | 'round' | 'square' | 'inherit';
+  rotate?: number;
+  process?: number; // process control 0-1
+  circle?: any;
+  defs?: any;
 }
 
 const ActivityIndicatorRolling: React.FC<ActivityIndicatorRollingProps> = (props) => {
@@ -36,14 +36,16 @@ const ActivityIndicatorRolling: React.FC<ActivityIndicatorRollingProps> = (props
   const viewBoxSize = size + 2 * strokeWidth;
   const circlePerimeter = size * 3.1415;
   const duration = 2;
-  const strokeDasharray = `${(process || 0) * circlePerimeter} ${(1 - (process || 0)) * circlePerimeter}`;
+  const strokeDasharray = `${(process || 0) * circlePerimeter} ${
+    (1 - (process || 0)) * circlePerimeter
+  }`;
   const isAutoAnimation = process === undefined;
   return (
-    <div className={classnames('md-activity-indicator-rolling', className)}>
+    <div className={classnames('wm-activity-indicator-rolling', className)}>
       <div className="rolling-container">
         <svg
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
-          style={{width: `${size}px`, height: `${size}px`, transform: `rotateZ(${rotate}deg)`}}
+          style={{ width: `${size}px`, height: `${size}px`, transform: `rotateZ(${rotate}deg)` }}
           preserveAspectRatio="xMidYMid"
           className="wm-activity-indicator-svg rolling"
         >
@@ -51,55 +53,60 @@ const ActivityIndicatorRolling: React.FC<ActivityIndicatorRollingProps> = (props
             fill="none"
             stroke={borderColor}
             strokeWidth={strokeWidth}
-            cx={viewBoxSize/2}
-            cy={viewBoxSize/2}
+            cx={viewBoxSize / 2}
+            cy={viewBoxSize / 2}
             r={radius}
           />
           {circle || (
             <g className="circle">
-              <circle
-                v-if="isAutoAnimation || process > 0"
-                className="stroke"
-                cx={viewBoxSize/2}
-                cy={viewBoxSize/2}
-                fill={fill}
-                stroke={color}
-                strokeWidth={strokeWidth}
-                strokeDasharray={isAutoAnimation ? `${110 * circlePerimeter / 125}` : strokeDasharray}
-                strokeLinecap={linecap}
-                r={radius}
-              >
-                <animate
-                  v-if="isAutoAnimation"
-                  attributeName="stroke-dashoffset"
-                  values={`${360 * circlePerimeter / 125};${140 * circlePerimeter / 125}`}
-                  dur="2.2s"
-                  keyTimes="0;1"
-                  calcMode="spline"
-                  fill="freeze"
-                  keySplines="0.41,0.314,0.8,0.54"
-                  repeatCount="indefinite"
-                  begin="0"
-                />
-                <animateTransform
-                  v-if="isAutoAnimation"
-                  dur={`${duration}s`}
-                  values={`0 ${viewBoxSize/2} ${viewBoxSize/2};360 ${viewBoxSize/2} ${viewBoxSize/2}`}
-                  attributeName="transform"
-                  type="rotate"
-                  calcMode="linear"
-                  keyTimes="0;1"
-                  begin="0"
-                  repeatCount="indefinite"
-                />
-              </circle>
+              {isAutoAnimation || process > 0 ? (
+                <circle
+                  className="stroke"
+                  cx={viewBoxSize / 2}
+                  cy={viewBoxSize / 2}
+                  fill={fill}
+                  stroke={color}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray={
+                    isAutoAnimation ? `${(110 * circlePerimeter) / 125}` : strokeDasharray
+                  }
+                  strokeLinecap={linecap}
+                  r={radius}
+                >
+                  {isAutoAnimation ? (
+                    <animate
+                      attributeName="stroke-dashoffset"
+                      values={`${(360 * circlePerimeter) / 125};${(140 * circlePerimeter) / 125}`}
+                      dur="2.2s"
+                      keyTimes="0;1"
+                      calcMode="spline"
+                      fill="freeze"
+                      keySplines="0.41,0.314,0.8,0.54"
+                      repeatCount="indefinite"
+                      begin="0"
+                    />
+                  ) : null}
+                  {isAutoAnimation ? (
+                    <animateTransform
+                      dur={`${duration}s`}
+                      values={`0 ${viewBoxSize / 2} ${viewBoxSize / 2};360 ${viewBoxSize / 2} ${
+                        viewBoxSize / 2
+                      }`}
+                      attributeName="transform"
+                      type="rotate"
+                      calcMode="linear"
+                      keyTimes="0;1"
+                      begin="0"
+                      repeatCount="indefinite"
+                    />
+                  ) : null}
+                </circle>
+              ) : null}
             </g>
           )}
           {defs}
         </svg>
-        <div className="content">
-          {children}
-        </div>
+        <div className="content">{children}</div>
       </div>
     </div>
   );

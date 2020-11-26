@@ -254,9 +254,9 @@ const ScrollView: React.FC<ScrollViewProps> = (props) => {
     const scroller = new Scroller(
       (left, top) => {
         render(content, left, top);
-        if (isInitialed) {
-          $_onScroll(left, top);
-        }
+        // if (isInitialed) {
+        $_onScroll(left, top);
+        // }
       },
       {
         scrollingX,
@@ -316,13 +316,11 @@ const ScrollView: React.FC<ScrollViewProps> = (props) => {
       $_initScroller();
     }
     setTest((pre) => {
-      // console.log(pre);
       pre.push(2);
       return [...pre];
     });
   }, []);
 
-  // console.log(test);
   React.useEffect(() => {
     reflowScroller();
   }, [scroller]);
