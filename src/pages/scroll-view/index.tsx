@@ -52,7 +52,7 @@ const ScrollViewPage: React.FC = () => {
           more={<ScrollViewMore isFinished={isFinished} />}
           scrollingX={false}
           onRefreshing={onRefreshing}
-          onEndReached={() => onEndReached()}
+          onEndReached={onEndReached}
         >
           {[...Array(count).keys()].map((i) => {
             return (

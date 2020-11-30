@@ -218,8 +218,16 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
     });
   };
 
+  endReachedHandler = debounce(() => {
+    const { onEndReached = () => {} } = this.props;
+    this.setState({
+      isEndReaching: true,
+    });
+    onEndReached();
+  }, 50);
+
   $_checkScrollerEnd = () => {
-    const { scroller, moreOffsetY, isEndReaching, endReachedHandler } = this.state;
+    const { scroller, moreOffsetY, isEndReaching } = this.state;
     const { endReachedThreshold = 0 } = this.props;
     if (!scroller) {
       return;
@@ -229,14 +237,15 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
     const top = scroller._scrollTop;
     const moreThreshold = endReachedThreshold;
     const endOffset = content - containerHeight - (top + moreOffsetY + moreThreshold);
-    if (top >= 0 && !isEndReaching && endOffset <= 0 && endReachedHandler) {
+    if (top >= 0 && !isEndReaching && endOffset <= 0 && this.endReachedHandler) {
       // First prepare for "load more" state
       this.setState({
         isEndReachingStart: true,
       });
       // Second enter "load more" state
       // & trigger endReached event only once after the rebounding animation
-      endReachedHandler();
+      // endReachedHandler();
+      this.endReachedHandler();
     }
   };
 
