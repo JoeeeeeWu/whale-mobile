@@ -13,7 +13,7 @@ export interface PopupProps {
   preventScroll?: boolean;
   preventScrollExclude?: string | Function;
   largeRadius?: boolean;
-  beforeHide?: Function;
+  onBeforeHide?: Function;
   onBeforeShow?: Function;
   hide?: Function;
   onShow?: Function;
@@ -36,7 +36,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     hasMask,
     largeRadius,
     transition,
-    beforeHide,
+    onBeforeHide,
     onBeforeShow,
     hide,
     onShow,
@@ -106,8 +106,8 @@ const Popup: React.FC<PopupProps> = (props) => {
   };
   const $_onPopupTransitionStart = () => {
     if (!isPopupBoxShow) {
-      if (beforeHide) {
-        beforeHide();
+      if (onBeforeHide) {
+        onBeforeHide();
       }
     } else if (onBeforeShow) {
       onBeforeShow();

@@ -1,0 +1,22 @@
+@import '../../components/style/themes/default.less';
+@import '../../components/style/mixins/index.less';
+
+.container {
+  position: relative;
+  height: 400px;
+  .dropMenu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    :global {
+      .wm-drop-menu-bar {
+        height: @drop-menu-height;
+      }
+    }
+  }
+  .content {
+    font-size: 26px;
+    line-height: 400px;
+    text-align: center;
+  }
+}
