@@ -1,0 +1,24 @@
+@import '../../style/themes/default.less';
+@import '../../style/mixins/index.less';
+
+.wm-radio-item {
+  .wm-radio {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.wm-radio-list {
+  .wm-cell-item-body.multilines .wm-cell-item-title {
+    font-weight: @font-weight-medium;
+  }
+  &.is-align-center {
+    .wm-cell-item-content {
+      text-align: center;
+    }
+    .wm-cell-left,
+    .md-cell-right {
+      display: none;
+    }
+  }
+}

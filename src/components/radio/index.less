@@ -1,0 +1,45 @@
+@import '../style/themes/default.less';
+@import '../style/mixins/index.less';
+
+.wm-radio {
+  display: flex;
+  align-items: center;
+  margin-top: @v-gap-sm;
+  margin-bottom: @v-gap-sm;
+  line-height: 1.5;
+
+  .wm-radio-icon {
+    color: @color-text-placeholder;
+    .wm-icon {
+      display: flex;
+    }
+  }
+  &.is-checked {
+    .wm-radio-icon {
+      color: @radio-color;
+    }
+  }
+  &.is-disabled {
+    .wm-radio-icon,
+    .wm-radio-label {
+      color: color-text-disabled;
+    }
+  }
+  &.is-inline {
+    display: inline-flex;
+    &:not(:last-child) {
+      margin-right: 40px;
+    }
+  }
+}
+
+.wm-radio-icon {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.wm-radio-label {
+  margin-left: @h-gap-sm;
+  font-weight: @font-weight-normal;
+  font-size: inherit;
+}

@@ -13,6 +13,8 @@ interface CellItemProps {
   left?: ReactElement;
   right?: ReactElement;
   extra?: ReactElement;
+  className?: string;
+  onClick?: Function;
 }
 
 const CellItem: React.FC<CellItemProps> = (props) => {
@@ -27,37 +29,41 @@ const CellItem: React.FC<CellItemProps> = (props) => {
     right,
     extra,
     children,
+    className,
+    onClick = () => {},
   } = props;
-  const $_onClick = () => {};
+  const $_onClick = (e: any) => {
+    onClick(e);
+  };
   return (
     <div
-      className={classnames('wm-cell-item', {
+      className={classnames('wm-cell-item', className, {
         'is-disabled': disabled,
         'no-border': noBorder,
       })}
       onClick={$_onClick}
     >
       <div
-        className={classnames('md-cell-item-body', {
+        className={classnames('wm-cell-item-body', {
           multilines: !!brief,
         })}
       >
-        {left ? <div className="md-cell-item-left">{left}</div> : null}
+        {left ? <div className="wm-cell-item-left">{left}</div> : null}
         {title || brief || children ? (
-          <div className="md-cell-item-content">
-            {title ? <p className="md-cell-item-title">{title}</p> : null}
-            {brief ? <p className="md-cell-item-brief">{brief}</p> : null}
+          <div className="wm-cell-item-content">
+            {title ? <p className="wm-cell-item-title">{title}</p> : null}
+            {brief ? <p className="wm-cell-item-brief">{brief}</p> : null}
             {children}
           </div>
         ) : null}
         {arrow || addon || right ? (
-          <div className="md-cell-item-right">
+          <div className="wm-cell-item-right">
             {right || addon}
             {arrow ? <Icon name="arrow-right" size="md" /> : null}
           </div>
         ) : null}
       </div>
-      {extra ? <div className="md-cell-item-children">{extra}</div> : null}
+      {extra ? <div className="wm-cell-item-children">{extra}</div> : null}
     </div>
   );
 };
