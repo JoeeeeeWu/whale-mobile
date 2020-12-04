@@ -10,6 +10,7 @@ interface DropMenuProps {
   data: any[];
   className?: string;
   onChange?: Function;
+  defaultValue?: any[];
 }
 
 const DropMenu: React.FC<DropMenuProps> = (props) => {
@@ -21,9 +22,11 @@ const DropMenu: React.FC<DropMenuProps> = (props) => {
   const [selectedMenuListValue, setSelectedMenuListValue] = React.useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeMenuBarIndex, setActiveMenuBarIndex] = React.useState<number>(-1);
-  const { data, className } = props;
+  const { data, className, defaultValue = [] } = props;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const $_checkBarItemSelect = (index: number) => {};
+  const $_checkBarItemSelect = (index: number) => {
+    return !!(selectedMenuListItem[index] !== undefined || defaultValue[index]);
+  };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const $_onBarItemClick = (barItem: any, index: number) => {
     if (!barItem || barItem.disabled) {
@@ -46,7 +49,9 @@ const DropMenu: React.FC<DropMenuProps> = (props) => {
 
   const $_onListHide = () => {};
 
-  const $_onListBeforeHide = () => {};
+  const $_onListBeforeHide = () => {
+    setActiveMenuBarIndex(-1);
+  };
 
   const $_onListItemClick = (listItem: any) => {
     const barItem = data[activeMenuBarIndex];
@@ -66,7 +71,6 @@ const DropMenu: React.FC<DropMenuProps> = (props) => {
     return data[activeMenuBarIndex].options;
   };
   const activeMenuListData = getActiveMenuListData();
-
   return (
     <div className={classnames('wm-drop-menu', className)}>
       <div className="wm-drop-menu-bar">

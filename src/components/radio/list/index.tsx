@@ -51,7 +51,9 @@ const RadioList: React.FC<RadioListProps> = (props) => {
   };
   const currentValue = getCurrentValue();
   const withoutIcon = children && !icon;
-  console.log(currentValue);
+  React.useEffect(() => {
+    setSelectedValue(value);
+  }, [value]);
   return (
     <div
       className={classnames('wm-radio-list', {

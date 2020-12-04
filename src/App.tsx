@@ -18,7 +18,7 @@ const App: React.FC<{}> = () => (
       <Route path="/dialog" component={DialogPage} />
       <Route path="/picker" component={PickerPage} />
       <Route path="/scroll-view" component={ScrollViewPage} />
-      <Route paht="/cell-item" component={CellItemPage} />
+      <Route path="/cell-item" component={CellItemPage} />
     </Switch>
   </Router>
 );
