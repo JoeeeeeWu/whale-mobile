@@ -8,6 +8,7 @@ import DialogPage from './pages/dialog';
 import PickerPage from './pages/picker';
 import ScrollViewPage from './pages/scroll-view';
 import CellItemPage from './pages/cell-item';
+import TabsPage from './pages/tabs';
 
 const App: React.FC<{}> = () => (
   <Router history={history}>
@@ -19,6 +20,7 @@ const App: React.FC<{}> = () => (
       <Route path="/picker" component={PickerPage} />
       <Route path="/scroll-view" component={ScrollViewPage} />
       <Route path="/cell-item" component={CellItemPage} />
+      <Route path="/tabs" component={TabsPage} />
     </Switch>
   </Router>
 );

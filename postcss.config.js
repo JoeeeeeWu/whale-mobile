@@ -16,7 +16,7 @@ module.exports = () => {
         reduceIdents: false,
       }]
     },
-    'autoprefixer': { browsers: browserslist },
+    'autoprefixer': { overrideBrowserslist: browserslist },
     'postcss-pxtorem': { rootValue: 100, minPixelValue: 2, propWhiteList: [] }
   }
 
