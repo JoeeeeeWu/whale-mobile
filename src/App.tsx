@@ -9,6 +9,7 @@ import PickerPage from './pages/picker';
 import ScrollViewPage from './pages/scroll-view';
 import CellItemPage from './pages/cell-item';
 import TabsPage from './pages/tabs';
+import './global.less';
 
 const App: React.FC<{}> = () => (
   <Router history={history}>

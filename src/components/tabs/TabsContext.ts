@@ -1,5 +1,5 @@
 import React from 'react';
 
-const TabsContext = React.createContext<string | number>('');
+const TabsContext = React.createContext<{ [key: string]: any }>({});
 
 export default TabsContext;
