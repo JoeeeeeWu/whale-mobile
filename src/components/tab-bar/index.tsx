@@ -1,7 +1,11 @@
 import React from 'react';
 
 const TabBar: React.FC = () => {
-  return <div>ddd</div>;
+  return (
+    <nav className="wm-tab-bar">
+      <div className="wm-tab-bar-inner">ddd</div>
+    </nav>
+  );
 };
 
 export default TabBar;
